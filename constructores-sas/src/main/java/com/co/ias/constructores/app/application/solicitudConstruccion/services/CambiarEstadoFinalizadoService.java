@@ -11,16 +11,15 @@ import com.co.ias.constructores.app.application.solicitudConstruccion.model.Vali
 import com.co.ias.constructores.app.application.solicitudConstruccion.ports.out.SolicitudConstruccionRepository;
 
 import reactor.core.publisher.Mono;
-
 @Service
-public class CambiaEstadoProgresoService {
-	public static final Logger log = LoggerFactory.getLogger(CambiaEstadoProgresoService.class);
+public class CambiarEstadoFinalizadoService {
+	public static final Logger log = LoggerFactory.getLogger(CambiarEstadoFinalizadoService.class);
 	@Autowired
 	private SolicitudConstruccionRepository solicitudConstruccionRepository;
-
-	public String cambiaEstadoProgreso() {
 	
-		 solicitudConstruccionRepository.findAll(Sort.by(Sort.Direction.ASC, "estado")).elementAt(0)
+	public String cambiaEstadoFinalizado() {
+		
+		solicitudConstruccionRepository.findAll(Sort.by(Sort.Direction.DESC, "estado")).elementAt(0)
 				.flatMap(solicitud -> {
 					return solicitudConstruccionRepository.ultimoProceso().elementAt(0)
 							.map(s -> new ElementoCambiarEstado(ValidacionEstado.SI, solicitud))
@@ -28,20 +27,19 @@ public class CambiaEstadoProgresoService {
 
 				}).flatMap(elemento -> {
 
-					if (ValidacionEstado.NO.equals(elemento.getValidacionEstado())) {
+					if (ValidacionEstado.SI.equals(elemento.getValidacionEstado())) {
 						var solicitud = elemento.getSolicitudConstruccionDBO();
-						solicitud.setEstado("proceso");
+						solicitud.setId(solicitud.getId());
+						solicitud.setEstado("finalizado");
 
 						solicitudConstruccionRepository.save(solicitud).subscribe();
 
 					}
 					return Mono.just(elemento);
 
-				}).subscribe();
-		 
-		 return "Realizado";
+				}).subscribe(s -> log.info(s.toString()));
 
-	
+		return "Realizado";
 
 	}
 

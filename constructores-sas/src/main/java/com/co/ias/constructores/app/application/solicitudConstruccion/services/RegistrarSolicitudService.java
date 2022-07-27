@@ -40,6 +40,7 @@ public class RegistrarSolicitudService implements RegistrarSolicitudConstruccion
 		return Mono.just(solicitudConstruccionRepository.findAll(Sort.by(Sort.Direction.DESC, "fechaFin")).elementAt(0)
 
 				.flatMap(ultimaSolicitud -> {
+				
 					return Mono.just(solicitudConstruccionDBO).map(s -> {
 						switch (s.getTipoContruccion()) {
 

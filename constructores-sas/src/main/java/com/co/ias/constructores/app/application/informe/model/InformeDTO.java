@@ -84,8 +84,7 @@ public class InformeDTO {
 
 	@Override
 	public String toString() {
-		return "Informe:  tipoConstruccion= " + tipoConstruccion + ", coordenadas= " + coordenadas + ", fechaInicio= "
-				+ fechaInicio + ", fechaFin= " + fechaFin + ", estado= " + estado + " ".concat("\n");
+		return "Informe:  tipoConstruccion= " + tipoConstruccion + ", estado= " + estado + " ".concat("\n");
 	}
 
 }

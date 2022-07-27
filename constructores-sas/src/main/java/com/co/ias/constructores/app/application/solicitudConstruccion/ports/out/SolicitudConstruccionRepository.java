@@ -6,17 +6,22 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import com.co.ias.constructores.app.application.solicitudConstruccion.model.SolicitudConstruccionDBO;
 
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 public interface SolicitudConstruccionRepository extends ReactiveMongoRepository<SolicitudConstruccionDBO, String>{
 	
 	@Query(value =" { coordenadas: ?0 } ")
-	Mono<SolicitudConstruccionDBO> validaCoordenadas(String coordenadas);
+	Flux<SolicitudConstruccionDBO> validaCoordenadas(String coordenadas);
 	
 	
 	
-	@Query(value =" { estado <> 'proceso' } ")
-	Flux<SolicitudConstruccionDBO> ultimoPendiente();
+	@Query(value =" { estado : 'proceso' } ")
+	Flux<SolicitudConstruccionDBO> ultimoProceso();
+	
+	
+
+	
+	
+	
 	
 
 }

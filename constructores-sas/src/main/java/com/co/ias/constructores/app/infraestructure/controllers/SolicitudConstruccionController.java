@@ -1,6 +1,7 @@
 package com.co.ias.constructores.app.infraestructure.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.co.ias.constructores.app.application.solicitudConstruccion.model.SolicitudConstruccionDTO;
 import com.co.ias.constructores.app.application.solicitudConstruccion.ports.in.RegistrarSolicitudConstruccionUseCase;
 import com.co.ias.constructores.app.application.solicitudConstruccion.services.CambiaEstadoProgresoService;
+import com.co.ias.constructores.app.application.solicitudConstruccion.services.CambiarEstadoFinalizadoService;
+import com.co.ias.constructores.app.shared.errors.AplicationError;
 
 import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
@@ -25,6 +28,9 @@ public class SolicitudConstruccionController {
 	@Autowired
 	private CambiaEstadoProgresoService cambiaEstadoProgresoService;
 	
+	@Autowired
+	private CambiarEstadoFinalizadoService cambiarEstadoFinalizadoService;
+	
 	@PostMapping
 	public Mono<ResponseEntity<Mono<Disposable>>> lista(
 			@RequestBody SolicitudConstruccionDTO solicitudConstruccionDTO) {
@@ -34,10 +40,27 @@ public class SolicitudConstruccionController {
 
 	}
 	
-	@GetMapping
+	@GetMapping("/proceso")
 	public ResponseEntity<?> cambioEstadoProceso() {
-		  return ResponseEntity.ok(cambiaEstadoProgresoService.cambiaEstadoProgreso());
+		try {
+			 return ResponseEntity.ok(cambiaEstadoProgresoService.cambiaEstadoProgreso());
+		} catch (Exception exception) {
+			AplicationError aplicationError = new AplicationError("SystemError", exception.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(aplicationError);
+		}
+		 
 	}
+	
+	@GetMapping("/finalizado")
+	public ResponseEntity<?> cambioEstadoFinalizado() {
+		try {
+			 return ResponseEntity.ok(cambiarEstadoFinalizadoService.cambiaEstadoFinalizado());
+		} catch (Exception exception) {
+			AplicationError aplicationError = new AplicationError("SystemError", exception.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(aplicationError);
+		}
+	}
+
 
 
 
