@@ -31,6 +31,13 @@ public class TipoMaterialDBO {
 		this.codigoMaterial = codigoMaterial;
 		this.cantidad = cantidad;
 	}
+	
+
+	public TipoMaterialDBO() {
+
+	
+	}
+
 
 	public TipoMaterial toDomain() {
 		return new TipoMaterial(new TipoMateriaId(this.tipoMaterialId), new NombreMaterial(this.nombreMaterial),

@@ -38,7 +38,7 @@ public class InformeService implements InformeRepository {
 	public String generarInforme(String rutaArchivo) throws IOException {
 		contenido=" ";
 	    MongoDatabase database = client.getDatabase("contructores");
-		MongoCollection<Document> collection = database.getCollection("solicitudConstruccion");
+		MongoCollection<Document> collection = database.getCollection("ordenConstruccion");
 		
         Consumer<Document> processBlock = new Consumer<Document>() {
             @Override

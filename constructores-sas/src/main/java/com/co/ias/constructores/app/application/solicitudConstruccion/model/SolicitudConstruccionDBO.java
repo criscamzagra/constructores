@@ -16,69 +16,65 @@ public class SolicitudConstruccionDBO {
 	@NotEmpty
 	private String coordenadas;
 	@NotEmpty
-	private LocalDateTime fechaInicio;
-	@NotEmpty
-	private LocalDateTime fechaFin;
-	@NotEmpty
-	private String estado;
+	private LocalDateTime fechaCreacion;
+	
+	
 	public SolicitudConstruccionDBO( @NotEmpty String tipoConstruccion, @NotEmpty String coordenadas) {
 		
 		this.tipoConstruccion = tipoConstruccion;
 		this.coordenadas = coordenadas;
-		this.estado="Pendiente";
+
+
 
 	}
-	
+	public SolicitudConstruccionDBO( @NotEmpty String tipoConstruccion, @NotEmpty String coordenadas,  @NotEmpty LocalDateTime fechaCreacion) {
+		
+		this.tipoConstruccion = tipoConstruccion;
+		this.coordenadas = coordenadas;
+		this.fechaCreacion = fechaCreacion;
+
+
+	}
 	public SolicitudConstruccionDBO() {
 		
-	}
-	
-	
-
-
-	@Override
-	public String toString() {
-		return "SolicitudConstruccionDBO [id=" + id + ", tipoConstruccion=" + tipoConstruccion + ", coordenadas="
-				+ coordenadas + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", estado=" + estado + "]";
 	}
 
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getTipoContruccion() {
+
+	public String getTipoConstruccion() {
 		return tipoConstruccion;
 	}
-	public void setTipoContruccion(String tipoContruccion) {
-		this.tipoConstruccion = tipoContruccion;
+
+	public void setTipoConstruccion(String tipoConstruccion) {
+		this.tipoConstruccion = tipoConstruccion;
 	}
+
 	public String getCoordenadas() {
 		return coordenadas;
 	}
+
 	public void setCoordenadas(String coordenadas) {
 		this.coordenadas = coordenadas;
 	}
-	public LocalDateTime getFechaInicio() {
-		return fechaInicio;
+
+	public LocalDateTime getFechaCreacion() {
+		return fechaCreacion;
 	}
-	public void setFechaInicio(LocalDateTime fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
-	public LocalDateTime getFechaFin() {
-		return fechaFin;
-	}
-	public void setFechaFin(LocalDateTime fechaFin) {
-		this.fechaFin = fechaFin;
-	}
-	public String getEstado() {
-		return estado;
-	}
-	public void setEstado(String estado) {
-		this.estado = estado;
+
+	public void setFechaCreacion(LocalDateTime fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
 	}
 	
+	
+
+
+
 	
 	
 	

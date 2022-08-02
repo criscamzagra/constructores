@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 
 public interface TipoMaterialRepository extends ReactiveMongoRepository<TipoMaterialDBO, String>{
 	
-	@Query(value =" { codigoMaterial: ?0 } ")
-	Mono<TipoMaterialDBO> consultaMaterial(String codigoMaterial);
+	@Query(value =" { nombreMaterial: ?0 } ")
+	Mono<TipoMaterialDBO> consultaMaterial(String nombreMaterial);
 
 }

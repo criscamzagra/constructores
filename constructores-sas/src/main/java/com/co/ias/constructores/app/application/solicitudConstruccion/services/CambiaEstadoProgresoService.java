@@ -6,42 +6,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.co.ias.constructores.app.application.ordenConstruccion.ports.out.OrdenConstruccionRepository;
 import com.co.ias.constructores.app.application.solicitudConstruccion.model.ElementoCambiarEstado;
 import com.co.ias.constructores.app.application.solicitudConstruccion.model.ValidacionEstado;
-import com.co.ias.constructores.app.application.solicitudConstruccion.ports.out.SolicitudConstruccionRepository;
 
 import reactor.core.publisher.Mono;
 
 @Service
 public class CambiaEstadoProgresoService {
 	public static final Logger log = LoggerFactory.getLogger(CambiaEstadoProgresoService.class);
+
 	@Autowired
-	private SolicitudConstruccionRepository solicitudConstruccionRepository;
+	private OrdenConstruccionRepository ordenConstruccionRepository;
 
 	public String cambiaEstadoProgreso() {
-	
-		 solicitudConstruccionRepository.findAll(Sort.by(Sort.Direction.ASC, "estado")).elementAt(0)
-				.flatMap(solicitud -> {
-					return solicitudConstruccionRepository.ultimoProceso().elementAt(0)
-							.map(s -> new ElementoCambiarEstado(ValidacionEstado.SI, solicitud))
-							.onErrorReturn(new ElementoCambiarEstado(ValidacionEstado.NO, solicitud));
 
-				}).flatMap(elemento -> {
+		ordenConstruccionRepository.findAll(Sort.by(Sort.Direction.ASC, "estado")).elementAt(0).flatMap(solicitud -> {
+			return ordenConstruccionRepository.ultimoProceso().elementAt(0)
+					.map(s -> new ElementoCambiarEstado(ValidacionEstado.SI, solicitud))
+					.onErrorReturn(new ElementoCambiarEstado(ValidacionEstado.NO, solicitud));
 
-					if (ValidacionEstado.NO.equals(elemento.getValidacionEstado())) {
-						var solicitud = elemento.getSolicitudConstruccionDBO();
-						solicitud.setEstado("proceso");
+		}).flatMap(elemento -> {
 
-						solicitudConstruccionRepository.save(solicitud).subscribe();
+			if (ValidacionEstado.NO.equals(elemento.getValidacionEstado())) {
+				var orden = elemento.getOrdenConstruccionDBO();
+				orden.setEstado("proceso");
 
-					}
-					return Mono.just(elemento);
+				ordenConstruccionRepository.save(orden).subscribe();
 
-				}).subscribe();
-		 
-		 return "Realizado";
+			}
+			return Mono.just(elemento);
 
-	
+		}).subscribe();
+
+		return "Realizado";
 
 	}
 

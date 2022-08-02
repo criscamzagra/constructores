@@ -16,7 +16,6 @@ import com.co.ias.constructores.app.application.solicitudConstruccion.services.C
 import com.co.ias.constructores.app.application.solicitudConstruccion.services.CambiarEstadoFinalizadoService;
 import com.co.ias.constructores.app.shared.errors.AplicationError;
 
-import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -32,7 +31,7 @@ public class SolicitudConstruccionController {
 	private CambiarEstadoFinalizadoService cambiarEstadoFinalizadoService;
 	
 	@PostMapping
-	public Mono<ResponseEntity<Mono<Disposable>>> lista(
+	public Mono<Object> RegistrarSolicitud(
 			@RequestBody SolicitudConstruccionDTO solicitudConstruccionDTO) {
 		return Mono.just(solicitudConstruccionDTO).map(SolicitudConstruccionDTO::fromDomain)
 				.map(solicitud -> ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)

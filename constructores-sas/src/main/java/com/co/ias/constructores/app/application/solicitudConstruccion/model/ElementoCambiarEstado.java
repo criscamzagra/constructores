@@ -1,14 +1,16 @@
 package com.co.ias.constructores.app.application.solicitudConstruccion.model;
 
+import com.co.ias.constructores.app.application.ordenConstruccion.model.OrdenConstruccionDBO;
+
 public class ElementoCambiarEstado {
 	
 	private ValidacionEstado validacionEstado;
 	
-	private SolicitudConstruccionDBO solicitudConstruccionDBO;
+	private OrdenConstruccionDBO ordenConstruccionDBO;
 
-	public ElementoCambiarEstado(ValidacionEstado validacionEstado, SolicitudConstruccionDBO solicitudConstruccionDBO) {
+	public ElementoCambiarEstado(ValidacionEstado validacionEstado, OrdenConstruccionDBO ordenConstruccionDBO) {
 		this.validacionEstado = validacionEstado;
-		this.solicitudConstruccionDBO = solicitudConstruccionDBO;
+		this.ordenConstruccionDBO = ordenConstruccionDBO;
 	}
 
 	public ValidacionEstado getValidacionEstado() {
@@ -19,14 +21,17 @@ public class ElementoCambiarEstado {
 		this.validacionEstado = validacionEstado;
 	}
 
-	public SolicitudConstruccionDBO getSolicitudConstruccionDBO() {
-		return solicitudConstruccionDBO;
+	public OrdenConstruccionDBO getOrdenConstruccionDBO() {
+		return ordenConstruccionDBO;
 	}
 
-	public void setSolicitudConstruccionDBO(SolicitudConstruccionDBO solicitudConstruccionDBO) {
-		this.solicitudConstruccionDBO = solicitudConstruccionDBO;
+	public void setOrdenConstruccionDBO(OrdenConstruccionDBO ordenConstruccionDBO) {
+		this.ordenConstruccionDBO = ordenConstruccionDBO;
 	}
 	
+	
+
+
 	
 	
 	
